@@ -1,15 +1,10 @@
 import java.util.Arrays;
 
-import Exception.ArrayIsFullException;
 import Exception.IncorrectIndexException;
 import Exception.NullItemException;
 
-import static java.lang.System.*;
-
-import static java.lang.System.arraycopy;
-
 public class IntegerListImpl implements IntegerList {
-    public final Integer[] array;
+    public Integer[] array;
     private int size = 0;
 
     public IntegerListImpl() {
@@ -135,7 +130,7 @@ public class IntegerListImpl implements IntegerList {
 
     private void validateSize() {
         if (size == array.length) {
-            throw new ArrayIsFullException("Нет больше места!!!");
+            grow();
         }
     }
 
@@ -144,15 +139,35 @@ public class IntegerListImpl implements IntegerList {
     }
 
     private void sort(Integer[] arr) {
-        for (int i = 0; i < arr.length; i++) {
-            int tmp = arr[i];
-            int j = i;
-            while (j > 0 && arr[j - 1] >= tmp) {
-                arr[j] = arr[j - 1];
-                j--;
-            }
-            arr[j] = tmp;
+        quickSort(array, 0, array.length - 1);
+    }
+
+    private void quickSort(Integer[] array, int start, int end) {
+        if (start < end) {
+            int partitionIndex = partition(array, start, end);
+            quickSort(array, start, partitionIndex - 1);
+            quickSort(array, partitionIndex + 1, end);
         }
+    }
+
+    private int partition(Integer[] array, int start, int end) {
+        int pivot = array[end];
+        int i = (start - 1);
+        for (int j = start; j < end; j++) {
+            if (array[j] <= pivot) {
+                i++;
+                swapElm(array, i, j);
+            }
+        }
+        swapElm(array, i + 1, end);
+
+        return i + 1;
+    }
+
+    private void swapElm(Integer[] array, int left, int right) {
+        int tmp = array[left];
+        array[left] = array[right];
+        array[right] = tmp;
     }
 
     private boolean binarySearch(Integer[] arr, Integer item) {
@@ -170,6 +185,11 @@ public class IntegerListImpl implements IntegerList {
             }
         }
         return false;
+    }
+
+    private void grow() {
+        array = Arrays.copyOf(array, size + (size / 2));
+
     }
 
 }

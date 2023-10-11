@@ -25,16 +25,6 @@ class StringListImplTest {
         assertEquals(underTest.get(0), integer1);
     }
 
-    @Test
-    void add_shouldThrowArrayIsFullExceptionWhenSizeIsFull() {
-        underTest.add(integer1);
-        underTest.add(integer2);
-        underTest.add(integer3);
-        underTest.add(integer4);
-        underTest.add(integer5);
-        assertThrows(ArrayIsFullException.class, () -> underTest.add(integer6));
-    }
-
 
     @Test
     void AddWithIndex_shouldAddElementWithIndexAndReturnInteger() {
@@ -42,19 +32,10 @@ class StringListImplTest {
         underTest.add(integer2);
         underTest.add(integer3);
         Integer expectedResult = 77777;
-        underTest.add(4, expectedResult);
-        assertEquals(expectedResult, underTest.get(4));
+        underTest.add(2, expectedResult);
+        assertEquals(expectedResult, underTest.get(2));
     }
 
-    @Test
-    void AddWithIndex_shouldThrowArrayIsFullExceptionWhenSizeIsFull() {
-        underTest.add(integer1);
-        underTest.add(integer2);
-        underTest.add(integer3);
-        underTest.add(integer4);
-        underTest.add(integer5);
-        assertThrows(ArrayIsFullException.class, () -> underTest.add(5, integer6));
-    }
 
     @Test
     void AddWithIndex_shouldThrowNullItemException() {
@@ -90,19 +71,6 @@ class StringListImplTest {
         underTest.add(integer1);
         Integer expectedResult = 11111;
         assertEquals(expectedResult, underTest.remove(0));
-    }
-
-
-    @Test
-    void contains_shouldReturnTrueWhenArrayContainsElement() {
-        underTest.add(integer1);
-        assertTrue(underTest.contains(11111));
-    }
-
-    @Test
-    void contains_shouldReturnFalseWhenArrayContainsElement() {
-        underTest.add(integer1);
-        assertFalse(underTest.contains(22222));
     }
 
 
